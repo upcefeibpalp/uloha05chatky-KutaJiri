@@ -16,6 +16,9 @@ public class EvidenceChatekApp {
 
         final int VELIKOST_KEMPU = 5;
         final int MAX_VELIKOST_CHATKY = 10;
+        
+        int pocetNavstevniku = 0;
+        int cisloChatky;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -43,10 +46,7 @@ public class EvidenceChatekApp {
             switch (operace) {
                 case VYPIS_CHATEK -> {
 
-                    // Projdi cele pole od <0, VELIKOST) a vypis kazdy index
-                    for (int i = 0; i < chatky.length; i++) {
-                        System.out.println("Chatka [" + (i + 1) + "] = " + chatky[i]);
-                    }
+                    vypis_Chatky(chatky);
                 }
 
                 case VYPIS_KONKRETNI_CHATKU -> {
@@ -54,7 +54,7 @@ public class EvidenceChatekApp {
                     // Ziskani cisla chatky od uzivatele
                     System.out.print("Zadej cislo chatky: ");
                     // Odecteni 1 protoze uzivatel cisluje chatky o 1, ale program od 0
-                    int cisloChatky = scanner.nextInt() - 1;
+                     cisloChatky = scanner.nextInt() - 1;
 
                     // Zaporne nebo cislo vetsi nez je pocet chatek je nevalidni vstup
                     if (cisloChatky < 0 || cisloChatky >= chatky.length) {
@@ -70,17 +70,18 @@ public class EvidenceChatekApp {
                     // Ziskani cisla chatky od uzivatele
                     System.out.print("Zadej cislo chatky: ");
                     // Odecteni 1 protoze uzivatel cisluje chatky o 1, ale program od 0
-                    int cisloChatky = scanner.nextInt() - 1;
+                    cisloChatky = scanner.nextInt() - 1;
 
                     // Zaporne nebo cislo vetsi nez je pocet chatek je nevalidni vstup
                     if (cisloChatky < 0 || cisloChatky >= chatky.length) {
                         System.err.println("Tato chatka neexistuje");
                         continue; // Zacni novou iteraci cyklu
+                        
                     }
 
                     // Ziskani poctu navstevniku, kteri se chteji v chatce ubytovat
                     System.out.print("Zadej pocet navstevniku: ");
-                    int pocetNavstevniku = scanner.nextInt();
+                    pocetNavstevniku = scanner.nextInt();
 
                     // Zaporne cislo nebo prilis velky nevalidni vstup
                     if (pocetNavstevniku <= 0 || pocetNavstevniku > MAX_VELIKOST_CHATKY) {
@@ -99,7 +100,23 @@ public class EvidenceChatekApp {
                 }
 
                 case ODEBRANI_NAVSTEVNIKU -> {
-                    // TODO
+                    System.out.println("Z jaké chatky budeme odebírat?");
+                    cisloChatky = scanner.nextInt() - 1;
+                    System.out.println("Zadej počet návštěvníků co chceš odebrat.");
+                    pocetNavstevniku = scanner.nextInt();
+                   // chatky[cisloChatky] = pocetNavstevniku - chatky[cisloChatky];
+                    
+                    System.out.println("Kolik lidí chceš odebrat?");
+                    int pocetlidi = scanner.nextInt();
+                    if(pocetlidi <= pocetNavstevniku){
+                    pocetNavstevniku = pocetNavstevniku - pocetlidi;
+                    System.out.println("V chatce je aktuálně počet osob = " + pocetNavstevniku);
+                        System.out.println("");
+                    }else{
+                        System.out.println("V chatce je počet osob = 0");
+                        System.out.println("");
+                        pocetNavstevniku = 0;
+                    }
                 }
 
                 case CELKOVA_OBSAZENOST -> {
@@ -119,5 +136,12 @@ public class EvidenceChatekApp {
                 }
             }
         } while (operace != 0);
+    }
+
+    private static void vypis_Chatky(int[] chatky) {
+        // Projdi cele pole od <0, VELIKOST) a vypis kazdy index
+        for (int i = 0; i < chatky.length; i++) {
+            System.out.println("Chatka [" + (i + 1) + "] = " + chatky[i]);
+        }
     }
 }
