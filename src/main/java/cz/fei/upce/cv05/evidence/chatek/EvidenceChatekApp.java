@@ -19,6 +19,7 @@ public class EvidenceChatekApp {
         
         int pocetNavstevniku = 0;
         int cisloChatky;
+        int obsazenost = 0;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -102,29 +103,42 @@ public class EvidenceChatekApp {
                 case ODEBRANI_NAVSTEVNIKU -> {
                     System.out.println("Z jaké chatky budeme odebírat?");
                     cisloChatky = scanner.nextInt() - 1;
-                    System.out.println("Zadej počet návštěvníků co chceš odebrat.");
-                    pocetNavstevniku = scanner.nextInt();
-                   // chatky[cisloChatky] = pocetNavstevniku - chatky[cisloChatky];
                     
-                    System.out.println("Kolik lidí chceš odebrat?");
-                    int pocetlidi = scanner.nextInt();
-                    if(pocetlidi <= pocetNavstevniku){
-                    pocetNavstevniku = pocetNavstevniku - pocetlidi;
-                    System.out.println("V chatce je aktuálně počet osob = " + pocetNavstevniku);
-                        System.out.println("");
-                    }else{
-                        System.out.println("V chatce je počet osob = 0");
-                        System.out.println("");
-                        pocetNavstevniku = 0;
+                    if (cisloChatky < 0 || cisloChatky >= chatky.length) {
+                        System.err.println("Tato chatka neexistuje");
+                        continue; // Zacni novou iteraci cyklu
+                        
+                    }
+                    
+                            System.out.println("Zadej počet návštěvníků co chceš odebrat.");
+                            pocetNavstevniku = scanner.nextInt();
+                            if(pocetNavstevniku > chatky[cisloChatky]){
+                                
+                            }else{
+                            chatky[cisloChatky] = chatky[cisloChatky] - pocetNavstevniku;
+                            }
+                            
+                    if(pocetNavstevniku - chatky[cisloChatky] <= 0){
+                        System.out.println("V chtce je 0 osob");
                     }
                 }
 
                 case CELKOVA_OBSAZENOST -> {
-                    // TODO
+//                    
+                    for (int i = 0; i < chatky.length; i++) {
+                        obsazenost += chatky[i];
+                    }
+                    
+                    System.out.println(obsazenost);
                 }
 
                 case VYPIS_PRAZDNE_CHATKY -> {
-                    // TODO
+                    for (int i = 0; i < chatky.length; i++) {
+                        if(chatky[i] == 0){
+                            int g = i + 1;
+                            System.out.println("chatka číslo: " + g + " je volná");
+                        }
+                    }
                 }
 
                 case KONEC_PROGRAMU -> {
